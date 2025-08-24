@@ -35,7 +35,7 @@ const CreativeTemplate = ({ data }: { data?: ResumeData }) => {
   return (
     <div className="w-[130mm] min-h-[150mm] bg-white font-sans shadow-lg mx-auto overflow-hidden">
 
-      <div className="bg-gradient-to-r from-purple-600 to-pink-500 text-white p-10 break-words">
+      <div className="bg-gradient-to-r from-[#9333ea] to-[#ec4899] text-white p-10 break-words">
         <h1 className="text-5xl font-bold break-words">{data.name || "Your Name"}</h1>
         <p className="mt-2 text-lg opacity-90 break-words">
           {data.email || "your@email.com"} | {data.phone || "123-456-7890"}
