@@ -11,7 +11,7 @@ type ResumeData = {
 
 const MinimalTemplate = ({ data = {} as ResumeData }: { data?: ResumeData }) => {
   return (
-    <div className="p-10 font-sans bg-white text-black w-[130mm] h-[297mm] overflow-y-auto">
+    <div className="p-10 font-sans bg-white text-black w-[130mm] h-[140mm] overflow-y-auto">
 
       <div className="mb-6">
         <h1 className="text-4xl font-bold break-words">

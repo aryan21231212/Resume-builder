@@ -1,12 +1,9 @@
 "use client";
-import React, { useMemo, useRef, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
 import MinimalTemplate from "./Minimal";
 import ModernTemplate from "./Modern";
 import CreativeTemplate from "./Creative";
-
 
 type Step =
   | "Personal Info"
@@ -39,7 +36,6 @@ interface ResumeData {
 
 type TemplateId = "classic" | "modern" | "creative";
 
-
 const steps: Step[] = [
   "Personal Info",
   "Education",
@@ -55,63 +51,37 @@ const templates: { id: TemplateId; name: string; previewColor: string }[] = [
 ];
 
 const Builder: React.FC = () => {
-
   const [stepIndex, setStepIndex] = useState<number>(0);
   const [selectedTemplate, setSelectedTemplate] = useState<TemplateId>("classic");
   const [form, setForm] = useState({
     name: "",
     email: "",
     phone: "",
-    education: "",  
-    experience: "", 
-    skills: "",     
+    education: "",
+    experience: "",
+    skills: "",
     summary: "",
   });
 
-
-  const a4Ref = useRef<HTMLDivElement>(null);
-
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const nextStep = () =>
-    setStepIndex((i) => (i < steps.length - 1 ? i + 1 : i));
-  const prevStep = () =>
-    setStepIndex((i) => (i > 0 ? i - 1 : i));
+  const nextStep = () => setStepIndex((i) => (i < steps.length - 1 ? i + 1 : i));
+  const prevStep = () => setStepIndex((i) => (i > 0 ? i - 1 : i));
 
   const normalizedData: ResumeData = useMemo(() => {
     const eduText = form.education.trim();
     const expText = form.experience.trim();
-    const skillsArr =
-      form.skills
-        .split(",")
-        .map((s) => s.trim())
-        .filter(Boolean) || [];
+    const skillsArr = form.skills
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean) || [];
 
-    const education: Education[] = eduText
-      ? [
-          {
-            degree: eduText, 
-            institution: "",
-            year: "",
-          },
-        ]
-      : [];
-
+    const education: Education[] = eduText ? [{ degree: eduText, institution: "", year: "" }] : [];
     const experience: Experience[] = expText
-      ? [
-          {
-            role: expText, 
-            company: "",
-            years: "",
-            details: form.summary || "",
-          },
-        ]
+      ? [{ role: expText, company: "", years: "", details: form.summary || "" }]
       : [];
 
     return {
@@ -123,25 +93,6 @@ const Builder: React.FC = () => {
       skills: skillsArr,
     };
   }, [form]);
-
-
-  const exportPDF = async () => {
-    if (!a4Ref.current) return;
-
-    const canvas = await html2canvas(a4Ref.current, { scale: 2, useCORS: true });
-    const imgData = canvas.toDataURL("image/png");
-
-    const pdf = new jsPDF("p", "mm", "a4");
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = pdf.internal.pageSize.getHeight();
-
-    const imgWidth = pdfWidth;
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-    pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-    pdf.save(`${normalizedData.name || "resume"}-${selectedTemplate}.pdf`);
-  };
-
 
   const renderTemplate = () => {
     switch (selectedTemplate) {
@@ -158,7 +109,7 @@ const Builder: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col">
-
+      {/* Steps */}
       <div className="flex justify-center gap-3 p-6 flex-wrap">
         {steps.map((label, i) => (
           <div
@@ -253,7 +204,7 @@ const Builder: React.FC = () => {
             />
           )}
 
-          {/* Nav */}
+
           <div className="flex justify-between mt-6">
             <button
               type="button"
@@ -275,10 +226,10 @@ const Builder: React.FC = () => {
             ) : (
               <button
                 type="button"
-                onClick={exportPDF}
+                onClick={() => alert("PDF generation triggered!")}
                 className="px-4 py-2 rounded-lg bg-green-500 hover:bg-green-600"
               >
-                Export PDF
+                Generate PDF
               </button>
             )}
           </div>
@@ -286,7 +237,6 @@ const Builder: React.FC = () => {
 
 
         <div className="w-full md:w-1/2 bg-gray-950 rounded-2xl p-6 shadow-lg">
-
           <h2 className="text-xl font-semibold mb-3">Choose Template</h2>
           <div className="flex gap-3 mb-6 flex-wrap">
             {templates.map((tpl) => (
@@ -294,7 +244,9 @@ const Builder: React.FC = () => {
                 key={tpl.id}
                 type="button"
                 onClick={() => setSelectedTemplate(tpl.id)}
-                className={`w-20 h-20 rounded-lg flex items-center justify-center text-xs font-bold border-2 transition ${selectedTemplate === tpl.id ? "border-white" : "border-gray-700"} ${tpl.previewColor}`}
+                className={`w-20 h-20 rounded-lg flex items-center justify-center text-xs font-bold border-2 transition ${
+                  selectedTemplate === tpl.id ? "border-white" : "border-gray-700"
+                } ${tpl.previewColor}`}
                 aria-pressed={selectedTemplate === tpl.id}
               >
                 {tpl.name}
@@ -303,11 +255,8 @@ const Builder: React.FC = () => {
           </div>
 
           <h2 className="text-2xl font-bold mb-4">Live Preview</h2>
-
-
           <div
-            ref={a4Ref}
-            className=" shadow-md"
+            className="shadow-md"
             style={{
               minHeight: "150mm",
               background: "black",
@@ -317,8 +266,7 @@ const Builder: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="bg-white h-5">
-      </div>
+      <div className="w-full h-5 bg-white"> </div>
     </div>
   );
 };
