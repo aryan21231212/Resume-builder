@@ -1,6 +1,6 @@
 import React from "react";
 
-// Types
+
 interface Experience {
   role: string;
   company: string;
@@ -26,7 +26,7 @@ interface ResumeData {
 const ModernTemplate = ({ data = {} as ResumeData }: { data?: ResumeData }) => {
   return (
     <div className="flex font-sans bg-gray-100 w-[130mm] min-h-[150mm] max-h-[297mm] overflow-hidden">
-      {/* Sidebar */}
+
       <div className="w-1/3 bg-blue-600 text-white p-6 overflow-y-auto">
         <h1 className="text-3xl font-bold break-words">
           {data?.name || "Your Name"}
@@ -46,9 +46,9 @@ const ModernTemplate = ({ data = {} as ResumeData }: { data?: ResumeData }) => {
         )}
       </div>
 
-      {/* Main Content */}
+
       <div className="w-2/3 p-8 overflow-y-auto">
-        {/* Experience */}
+
         <h2 className="text-2xl text-black font-bold border-b pb-2">Experience</h2>
         {data?.experience?.length ? (
           <div className="space-y-4">
@@ -70,7 +70,7 @@ const ModernTemplate = ({ data = {} as ResumeData }: { data?: ResumeData }) => {
           <p className="text-gray-500">No experience added</p>
         )}
 
-        {/* Education */}
+
         <h2 className="text-2xl text-black font-bold border-b pb-2 mt-6">Education</h2>
         {data?.education?.length ? (
           <ul className="space-y-2">

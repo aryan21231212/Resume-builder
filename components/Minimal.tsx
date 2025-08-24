@@ -12,7 +12,7 @@ type ResumeData = {
 const MinimalTemplate = ({ data = {} as ResumeData }: { data?: ResumeData }) => {
   return (
     <div className="p-10 font-sans bg-white text-black w-[130mm] h-[297mm] overflow-y-auto">
-      {/* Header */}
+
       <div className="mb-6">
         <h1 className="text-4xl font-bold break-words">
           {data?.name || "Your Name"}
@@ -24,7 +24,7 @@ const MinimalTemplate = ({ data = {} as ResumeData }: { data?: ResumeData }) => 
 
       <hr className="border-gray-300 mb-6" />
 
-      {/* Experience */}
+
       <section className="mb-6">
         <h2 className="text-2xl font-semibold mb-2">Experience</h2>
         {data?.experience?.length ? (
@@ -46,7 +46,7 @@ const MinimalTemplate = ({ data = {} as ResumeData }: { data?: ResumeData }) => 
         )}
       </section>
 
-      {/* Education */}
+
       <section className="mb-6">
         <h2 className="text-2xl font-semibold mb-2">Education</h2>
         {data?.education?.length ? (
@@ -63,7 +63,7 @@ const MinimalTemplate = ({ data = {} as ResumeData }: { data?: ResumeData }) => 
         )}
       </section>
 
-      {/* Skills */}
+
       <section>
         <h2 className="text-2xl font-semibold mb-2">Skills</h2>
         {data?.skills?.length ? (

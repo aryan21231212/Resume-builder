@@ -1,6 +1,6 @@
 import React from "react";
 
-// Define types
+
 interface Experience {
   role: string;
   company: string;
@@ -34,7 +34,7 @@ const CreativeTemplate = ({ data }: { data?: ResumeData }) => {
 
   return (
     <div className="w-[130mm] min-h-[150mm] bg-white font-sans shadow-lg mx-auto overflow-hidden">
-      {/* Header Banner */}
+
       <div className="bg-gradient-to-r from-purple-600 to-pink-500 text-white p-10 break-words">
         <h1 className="text-5xl font-bold break-words">{data.name || "Your Name"}</h1>
         <p className="mt-2 text-lg opacity-90 break-words">
@@ -42,9 +42,9 @@ const CreativeTemplate = ({ data }: { data?: ResumeData }) => {
         </p>
       </div>
 
-      {/* Content */}
+
       <div className="grid grid-cols-2 gap-10 p-10">
-        {/* Left Column - Experience */}
+
         <div>
           <h2 className="text-2xl font-semibold text-purple-600 border-b-2 border-purple-200 pb-2 mb-4">
             Experience
@@ -66,7 +66,7 @@ const CreativeTemplate = ({ data }: { data?: ResumeData }) => {
           )}
         </div>
 
-        {/* Right Column - Education & Skills */}
+
         <div>
           <h2 className="text-2xl font-semibold text-pink-600 border-b-2 border-pink-200 pb-2 mb-4">
             Education
