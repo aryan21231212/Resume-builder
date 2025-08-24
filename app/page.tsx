@@ -7,8 +7,6 @@ const page = () => {
   return (
     <>
       <Navbar />
-      <Home />
-      <HowitWorks />
     </>
   )
 }
