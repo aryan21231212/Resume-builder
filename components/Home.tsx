@@ -22,7 +22,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Features Section */}
+
       <section className="py-16 bg-gray-900 px-6  w-full text-center">
         <h2 className="text-3xl font-bold text-indigo-500 mb-12">Features</h2>
         <div className="grid gap-8 md:grid-cols-3">
@@ -42,7 +42,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
+
       <section className="w-full bg-gray-900 text-white text-center py-16 px-6">
         <h2 className="text-3xl md:text-4xl font-bold mb-6">
           Ready to Create Your Resume?
