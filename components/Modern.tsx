@@ -129,7 +129,7 @@ const ModernTemplate = ({ data = {} as ResumeData }: { data?: ResumeData }) => {
           )}
         </section>
 
-        {/* Additional Section for mobile */}
+
         <div className="lg:hidden mt-8 pt-6 border-t border-gray-300">
           <h3 className="font-semibold text-black mb-2">Availability</h3>
           <p className="text-gray-600 text-sm">Open to new opportunities</p>

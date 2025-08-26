@@ -29,15 +29,15 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { template, data }: { template: string; data: ResumeData } = body;
 
-    // Generate HTML directly instead of using React components
+
     const getHtmlContent = (template: string, data: ResumeData) => {
-      // Helper function to format arrays
+
       const formatList = <T>(items: T[] | undefined, formatFn: (item: T) => string) => {
         if (!items || items.length === 0) return '';
         return items.map(item => formatFn(item)).join('');
       };
 
-      // Format education items
+
       const educationHtml = formatList(data.education, (edu: EducationItem) => `
         <div style="margin-bottom: 15px;">
           <h3 style="margin: 0; color: #333;">${edu.degree || 'Degree'}</h3>
@@ -45,7 +45,7 @@ export async function POST(req: Request) {
         </div>
       `);
 
-      // Format experience items
+
       const experienceHtml = formatList(data.experience, (exp: ExperienceItem) => `
         <div style="margin-bottom: 20px;">
           <h3 style="margin: 0; color: #333;">${exp.role || 'Position'}</h3>
@@ -54,14 +54,14 @@ export async function POST(req: Request) {
         </div>
       `);
 
-      // Format skills
+
       const skillsHtml = formatList(data.skills, (skill: string) => `
         <span style="display: inline-block; background: #f0f0f0; padding: 5px 10px; margin: 5px; border-radius: 15px; font-size: 14px;">
           ${skill}
         </span>
       `);
 
-      // Template definitions
+
       const templates = {
         classic: `
           <div style="font-family: Arial, sans-serif; padding: 40px; max-width: 800px; margin: 0 auto;">
@@ -198,7 +198,7 @@ export async function POST(req: Request) {
 
     const html = getHtmlContent(template, data);
 
-    // Use Puppeteer to generate PDF
+
     const browser = await puppeteer.launch({
       headless: true,
       args: ['--no-sandbox', '--disable-setuid-sandbox']
@@ -227,7 +227,7 @@ export async function POST(req: Request) {
     });
     await browser.close();
 
-    // Return PDF
+
     return new NextResponse(Buffer.from(pdfBuffer), {
       headers: {
         "Content-Type": "application/pdf",

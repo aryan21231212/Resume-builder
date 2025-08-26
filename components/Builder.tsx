@@ -119,16 +119,16 @@ const Builder: React.FC = () => {
         }),
       });
 
-      // Check if response is a PDF (not JSON)
+
       const contentType = response.headers.get("content-type");
       if (contentType && contentType.includes("application/pdf")) {
-        // Create a blob from the PDF data
+
         const blob = await response.blob();
         
-        // Create a URL for the blob
+
         const url = window.URL.createObjectURL(blob);
         
-        // Create a temporary link element to trigger download
+
         const link = document.createElement("a");
         link.href = url;
         link.download = "resume.pdf";
@@ -141,7 +141,7 @@ const Builder: React.FC = () => {
         
         alert("PDF downloaded successfully!");
       } else {
-        // If it's not a PDF, try to parse as JSON for error handling
+
         const result = await response.json();
         alert(`Failed to generate PDF: ${result.error || "Unknown error"}`);
       }
