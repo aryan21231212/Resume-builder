@@ -107,7 +107,7 @@ const Builder: React.FC = () => {
     }
   };
 
-  // 🔹 New function to send data to API
+  // 🔹 Fixed function to handle PDF response
   const generatePDF = async () => {
     try {
       const response = await fetch("/api/generate-pdf", {
@@ -119,15 +119,35 @@ const Builder: React.FC = () => {
         }),
       });
 
-      const result = await response.json();
-      if (result.success) {
-        alert("✅ PDF generation request sent!");
+      // Check if response is a PDF (not JSON)
+      const contentType = response.headers.get("content-type");
+      if (contentType && contentType.includes("application/pdf")) {
+        // Create a blob from the PDF data
+        const blob = await response.blob();
+        
+        // Create a URL for the blob
+        const url = window.URL.createObjectURL(blob);
+        
+        // Create a temporary link element to trigger download
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "resume.pdf";
+        document.body.appendChild(link);
+        link.click();
+        
+        // Clean up
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(link);
+        
+        alert("PDF downloaded successfully!");
       } else {
-        alert("❌ Failed to generate PDF");
+        // If it's not a PDF, try to parse as JSON for error handling
+        const result = await response.json();
+        alert(`Failed to generate PDF: ${result.error || "Unknown error"}`);
       }
     } catch (err) {
       console.error(err);
-      alert("⚠️ Error sending data to API");
+      alert("⚠️ Error generating PDF");
     }
   };
 
