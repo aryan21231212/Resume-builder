@@ -107,6 +107,30 @@ const Builder: React.FC = () => {
     }
   };
 
+  // 🔹 New function to send data to API
+  const generatePDF = async () => {
+    try {
+      const response = await fetch("/api/generate-pdf", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          template: selectedTemplate,
+          data: normalizedData,
+        }),
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        alert("✅ PDF generation request sent!");
+      } else {
+        alert("❌ Failed to generate PDF");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("⚠️ Error sending data to API");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col">
       {/* Steps */}
@@ -123,9 +147,8 @@ const Builder: React.FC = () => {
         ))}
       </div>
 
-
       <div className="flex flex-col md:flex-row max-w-6xl mx-auto w-full gap-6 p-6 items-start">
-
+        {/* Form */}
         <motion.div
           key={stepIndex}
           initial={{ opacity: 0, x: -24 }}
@@ -204,7 +227,6 @@ const Builder: React.FC = () => {
             />
           )}
 
-
           <div className="flex justify-between mt-6">
             <button
               type="button"
@@ -226,7 +248,7 @@ const Builder: React.FC = () => {
             ) : (
               <button
                 type="button"
-                onClick={() => alert("PDF generation triggered!")}
+                onClick={generatePDF}
                 className="px-4 py-2 rounded-lg bg-green-500 hover:bg-green-600"
               >
                 Generate PDF
@@ -235,7 +257,7 @@ const Builder: React.FC = () => {
           </div>
         </motion.div>
 
-
+        {/* Preview */}
         <div className="w-full md:w-1/2 bg-gray-950 rounded-2xl p-6 shadow-lg">
           <h2 className="text-xl font-semibold mb-3">Choose Template</h2>
           <div className="flex gap-3 mb-6 flex-wrap">
